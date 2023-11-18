@@ -10,7 +10,10 @@ const peerBuilder = (mode) => {
   let transducer = null;
 
   if (mode === "tx") {
-    transducer = writer;
+    transducer = (socket, pInfo) => {
+      writer(socket, pInfo);
+      reader(socket, pInfo);
+    };
   } else if (mode === "rx") {
     transducer = reader;
   }
